@@ -96,4 +96,42 @@ describe('clusterix', () => {
       'node2',
     ]));
   });
+
+  it('should throw when the heartbeat is too big', () => {
+    expect(() => new Clusterix(redis, {
+      timeout: 1000,
+      heartbeatInterval: 1001,
+      nodeId: 'node1',
+    }).initializeNode()).to.throw(Error, 'Heartbeats should be more frequent than the timeout');
+  });
+
+  it('should not use an empty id', async () => {
+    clusterInstances = [new Clusterix(redis, {
+      pollInterval,
+      timeout,
+      heartbeatInterval,
+      nodeId: 'node1',
+      id: '',
+    })];
+
+    const date = Date.now();
+    await clusterInstances[0].initializeNode();
+
+    return expect(redis.hgetall('heartbeats')).to.become({ node1: date.toString() });
+  });
+
+  it('should use an id', async () => {
+    clusterInstances = [new Clusterix(redis, {
+      pollInterval,
+      timeout,
+      heartbeatInterval,
+      nodeId: 'node1',
+      id: 'mycluster',
+    })];
+
+    const date = Date.now();
+    await clusterInstances[0].initializeNode();
+
+    return expect(redis.hgetall('mycluster:heartbeats')).to.become({ node1: date.toString() });
+  });
 });

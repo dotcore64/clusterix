@@ -94,7 +94,7 @@ module.exports = class extends EventEmitter {
     this.pollTimer = null;
   }
 
-  #redisKey = (key) => ((this.id && this.id.length)
+  #redisKey = (key) => ((typeof this.id === 'string' && this.id.length)
     ? `${this.id}:${key}`
     : key);
 
