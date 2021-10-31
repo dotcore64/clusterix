@@ -1,5 +1,5 @@
 {
   "ui": "bdd",
   "report": "spec",
-  "require": ["env-test", "@babel/register", "test/prepare.js"]
+  "require": ["test/prepare.js"]
 }
