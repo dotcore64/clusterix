@@ -2,8 +2,8 @@ const Redis = require('ioredis');
 
 const { spy } = require('sinon');
 const { expect } = require('chai');
-const delay = require('delay');
-const { install: pdel } = require('redis-pdel');
+const { setTimeout } = require('timers/promises');
+const { name: pdel, lua, numberOfKeys } = require('redis-pdel');
 
 const Clusterix = require('..');
 
@@ -16,7 +16,7 @@ describe('clusterix', () => {
   const timeout = interval * 2;
   const redis = new Redis({ keyPrefix: 'clusterix:test:' });
 
-  pdel(redis);
+  redis.defineCommand(pdel, { lua, numberOfKeys });
 
   const initializeTestNodes = (count = 3) => [...Array(count).keys()].map(
     (i) => {
@@ -87,7 +87,7 @@ describe('clusterix', () => {
     clusterInstances[1].on('node down', nodeDown);
     clusterInstances[2].dispose();
 
-    await delay(timeout * 2);
+    await setTimeout(timeout * 2);
 
     expect(nodeDown).to.have.been.calledOnceWithExactly(node);
 

@@ -2,7 +2,7 @@ const { EventEmitter } = require('events');
 const { hostname } = require('os');
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const delay = require('delay');
+const { setTimeout } = require('timers/promises');
 
 const defaultNodeId = () => `${hostname()}:${process.env.PORT}`;
 const lua = readFileSync(join(__dirname, './poll.lua'), 'utf8');
@@ -72,7 +72,7 @@ module.exports = class extends EventEmitter {
       .then(async (initialized) => {
         if (!initialized) {
           // Test if another node is sending heartbeats as this node
-          await delay(this.heartbeatInterval);
+          await setTimeout(this.heartbeatInterval);
           if (await this.#lastTimestamp() > timestamp) {
             throw new Error('Duplicate node sending heartbeats');
           }
