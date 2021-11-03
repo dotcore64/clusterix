@@ -1,38 +1,37 @@
-const { EventEmitter } = require('events');
-const { hostname } = require('os');
-const { readFileSync } = require('fs');
-const { join } = require('path');
-const { setTimeout } = require('timers/promises');
+import { EventEmitter } from 'events';
+import { hostname } from 'os';
+import { readFileSync } from 'fs';
+import { setTimeout } from 'timers/promises';
 
 const defaultNodeId = () => `${hostname()}:${process.env.PORT}`;
-const lua = readFileSync(join(__dirname, './poll.lua'), 'utf8');
+const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line no-undef
 
-module.exports = class extends EventEmitter {
-  #id
+export default class extends EventEmitter {
+  #id;
 
   get id() {
     return this.#id;
   }
 
-  #nodeId
+  #nodeId;
 
   get nodeId() {
     return this.#nodeId;
   }
 
-  #heartbeatInterval
+  #heartbeatInterval;
 
   get heartbeatInterval() {
     return this.#heartbeatInterval;
   }
 
-  #pollInterval
+  #pollInterval;
 
   get pollInterval() {
     return this.#pollInterval;
   }
 
-  #timeout
+  #timeout;
 
   get timeout() {
     return this.#timeout;
@@ -100,11 +99,11 @@ module.exports = class extends EventEmitter {
 
   #lastTimestamp = () => (
     this.redis.hget(this.#redisKey('heartbeats'), this.nodeId)
-  )
+  );
 
   #heartbeat = (timestamp = Date.now()) => (
     this.redis.hset(this.#redisKey('heartbeats'), this.nodeId, timestamp)
-  )
+  );
 
   #poll = () => (
     this.redis.__clusterix__poll( // eslint-disable-line no-underscore-dangle
@@ -112,5 +111,5 @@ module.exports = class extends EventEmitter {
       Date.now(),
       this.timeout,
     ).then((nodes) => nodes.map((nodeid) => this.emit('node down', nodeid)))
-  )
-};
+  );
+}
