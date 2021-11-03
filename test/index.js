@@ -1,11 +1,13 @@
-const Redis = require('ioredis');
+import Redis from 'ioredis';
 
-const { spy } = require('sinon');
-const { expect } = require('chai');
-const { setTimeout } = require('timers/promises');
-const { name: pdel, lua, numberOfKeys } = require('redis-pdel');
+import { spy } from 'sinon';
+import { expect } from 'chai';
+import { setTimeout } from 'timers/promises';
+import { name as pdel, lua, numberOfKeys } from 'redis-pdel';
 
-const Clusterix = require('..');
+// https://github.com/import-js/eslint-plugin-import/issues/1649
+// eslint-disable-next-line import/no-unresolved,node/no-missing-import
+import Clusterix from 'clusterix';
 
 describe('clusterix', () => {
   let clusterInstances;

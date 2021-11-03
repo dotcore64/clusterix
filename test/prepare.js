@@ -1,4 +1,5 @@
-const chai = require('chai');
+import { use } from 'chai';
 
-chai.use(require('sinon-chai'));
-chai.use(require('chai-as-promised'));
+// https://github.com/mysticatea/eslint-plugin-node/issues/250
+use((await import('sinon-chai')).default); // eslint-disable-line node/no-unsupported-features/es-syntax
+use((await import('chai-as-promised')).default); // eslint-disable-line node/no-unsupported-features/es-syntax
