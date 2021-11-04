@@ -8,6 +8,7 @@ import { name as pdel, lua, numberOfKeys } from 'redis-pdel';
 // https://github.com/import-js/eslint-plugin-import/issues/1649
 // eslint-disable-next-line import/no-unresolved,node/no-missing-import
 import Clusterix from 'clusterix';
+import { createRequire } from 'module';
 
 describe('clusterix', () => {
   let clusterInstances;
@@ -135,5 +136,10 @@ describe('clusterix', () => {
     await clusterInstances[0].initializeNode();
 
     return expect(redis.hgetall('mycluster:heartbeats')).to.become({ node1: date.toString() });
+  });
+
+  it('should require the cjs module', () => {
+    const require = createRequire(import.meta.url);
+    expect(require('..')).to.be.a('function');
   });
 });
