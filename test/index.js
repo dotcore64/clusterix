@@ -1,14 +1,14 @@
-import Redis from 'ioredis';
+import { createRequire } from 'module';
+import { setTimeout } from 'timers/promises';
 
+import Redis from 'ioredis';
 import { spy } from 'sinon';
 import { expect } from 'chai';
-import { setTimeout } from 'timers/promises';
 import { name as pdel, lua, numberOfKeys } from 'redis-pdel';
 
 // https://github.com/import-js/eslint-plugin-import/issues/1649
 // eslint-disable-next-line import/no-unresolved,node/no-missing-import
 import Clusterix from 'clusterix';
-import { createRequire } from 'module';
 
 describe('clusterix', () => {
   let clusterInstances;
