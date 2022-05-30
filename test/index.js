@@ -1,4 +1,4 @@
-import { setTimeout } from 'timers/promises';
+import { setTimeout } from 'node:timers/promises';
 
 import Redis from 'ioredis';
 import { spy } from 'sinon';
@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { name as pdel, lua, numberOfKeys } from 'redis-pdel';
 
 // https://github.com/import-js/eslint-plugin-import/issues/1649
-// eslint-disable-next-line import/no-unresolved,node/no-missing-import
+// eslint-disable-next-line import/no-unresolved,n/no-missing-import
 import Clusterix from 'clusterix';
 
 describe('clusterix', () => {
@@ -20,7 +20,7 @@ describe('clusterix', () => {
 
   redis.defineCommand(pdel, { lua, numberOfKeys });
 
-  const initializeTestNodes = (count = 3) => [...Array(count).keys()].map(
+  const initializeTestNodes = (length = 3) => [...Array.from({ length }).keys()].map(
     (i) => {
       const node = new Clusterix(redis, {
         pollInterval,
