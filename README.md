@@ -3,8 +3,6 @@
 [![Build Status][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coverage Status][coveralls-badge]][coveralls]
-[![Dependency Status][dependency-status-badge]][dependency-status]
-[![devDependency Status][dev-dependency-status-badge]][dev-dependency-status]
 
 > Node module for cluster node management
 
@@ -127,9 +125,3 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 [coveralls-badge]: https://img.shields.io/coveralls/dotcore64/clusterix/master.svg?style=flat-square
 [coveralls]: https://coveralls.io/r/dotcore64/clusterix
-
-[dependency-status-badge]: https://david-dm.org/dotcore64/clusterix.svg?style=flat-square
-[dependency-status]: https://david-dm.org/dotcore64/clusterix
-
-[dev-dependency-status-badge]: https://david-dm.org/dotcore64/clusterix/dev-status.svg?style=flat-square
-[dev-dependency-status]: https://david-dm.org/dotcore64/clusterix#info=devDependencies

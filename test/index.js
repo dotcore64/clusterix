@@ -1,4 +1,3 @@
-import { createRequire } from 'module';
 import { setTimeout } from 'timers/promises';
 
 import Redis from 'ioredis';
@@ -136,10 +135,5 @@ describe('clusterix', () => {
     await clusterInstances[0].initializeNode();
 
     return expect(redis.hgetall('mycluster:heartbeats')).to.become({ node1: date.toString() });
-  });
-
-  it('should require the cjs module', () => {
-    const require = createRequire(import.meta.url);
-    expect(require('..')).to.be.a('function');
   });
 });
