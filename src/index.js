@@ -1,10 +1,10 @@
-import { EventEmitter } from 'events';
-import { hostname } from 'os';
-import { readFileSync } from 'fs';
-import { setTimeout } from 'timers/promises';
+import { EventEmitter } from 'node:events';
+import { hostname } from 'node:os';
+import { setTimeout } from 'node:timers/promises';
+import { readFileSync } from 'fs'; // eslint-disable-line unicorn/prefer-node-protocol
 
 const defaultNodeId = () => `${hostname()}:${process.env.PORT}`;
-const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line no-undef
+const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line no-undef,unicorn/prefer-module
 
 export default class extends EventEmitter {
   #id;
@@ -93,7 +93,7 @@ export default class extends EventEmitter {
     this.pollTimer = null;
   }
 
-  #redisKey = (key) => ((typeof this.id === 'string' && this.id.length)
+  #redisKey = (key) => ((typeof this.id === 'string' && this.id.length > 0)
     ? `${this.id}:${key}`
     : key);
 
