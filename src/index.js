@@ -77,7 +77,7 @@ export default class extends EventEmitter {
           }
 
           // This node went down without proper cleanup
-          this.emit('node down', this.nodeId);
+          this.#emitNodeDown();
         }
 
         this.heartbeatTimer = setInterval(this.#heartbeat, this.heartbeatInterval);
@@ -110,6 +110,8 @@ export default class extends EventEmitter {
       this.#redisKey('heartbeats'),
       Date.now(),
       this.timeout,
-    ).then((nodes) => nodes.map((nodeid) => this.emit('node down', nodeid)))
+    ).then((nodes) => nodes.forEach(this.#emitNodeDown))
   );
+
+  #emitNodeDown = (nodeId = this.nodeId) => this.emit('node down', nodeId);
 }

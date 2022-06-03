@@ -8,7 +8,8 @@
   "rules": {
     "unicorn/no-null": 0,
     "unicorn/prevent-abbreviations": 0,
-    "unicorn/no-array-for-each": 0
+    "unicorn/no-array-for-each": 0,
+    "unicorn/no-array-callback-reference": 0
   },
   "overrides": [{
     "files": ["test/**/*.js"],
