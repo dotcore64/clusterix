@@ -37,7 +37,7 @@
   "homepage": "https://github.com/dotcore64/clusterix#readme",
   "devDependencies": {
     "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.18.2",
+    "@babel/core": "^7.18.5",
     "babel-plugin-static-fs": "^3.0.0",
     "c8": "^7.11.3",
     "chai": "^4.3.6",
