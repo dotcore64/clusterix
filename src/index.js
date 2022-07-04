@@ -6,6 +6,8 @@ import { readFileSync } from 'fs'; // eslint-disable-line unicorn/prefer-node-pr
 const defaultNodeId = () => `${hostname()}:${process.env.PORT}`;
 const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line no-undef,unicorn/prefer-module
 
+// TODO: Replace with EventTarget next major?
+// eslint-disable-next-line unicorn/prefer-event-target
 export default class extends EventEmitter {
   #id;
 
