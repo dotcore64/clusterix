@@ -117,7 +117,7 @@ npm test
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
-[build-badge]: https://img.shields.io/github/workflow/status/dotcore64/clusterix/test/master?style=flat-square
+[build-badge]: https://img.shields.io/github/actions/workflow/status/dotcore64/clusterix/test.yml?event=push&style=flat-square
 [build]: https://github.com/dotcore64/clusterix/actions
 
 [npm-badge]: https://img.shields.io/npm/v/clusterix.svg?style=flat-square
