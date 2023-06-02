@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { name as pdel, lua, numberOfKeys } from 'redis-pdel';
 
 // https://github.com/import-js/eslint-plugin-import/issues/1649
-// eslint-disable-next-line import/no-unresolved,n/no-missing-import
+// eslint-disable-next-line import/no-unresolved
 import Clusterix from 'clusterix';
 
 describe('clusterix', () => {
