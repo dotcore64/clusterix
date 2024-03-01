@@ -34,7 +34,9 @@ describe('clusterix', () => {
   );
 
   beforeEach(() => redis.pdel('*'));
+
   afterEach(() => clusterInstances.forEach((cluster) => cluster.dispose()));
+
   after(() => redis.disconnect());
 
   it('should properly create cluster of 3 nodes', async () => {
