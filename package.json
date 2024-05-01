@@ -1,6 +1,6 @@
 {
   "name": "clusterix",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Node module for cluster node management",
   "main": "dist/index.js",
   "type": "module",
