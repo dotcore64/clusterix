@@ -51,7 +51,7 @@
     "eslint-plugin-unicorn": "^56.0.1",
     "ioredis": "^5.8.2",
     "mocha": "^11.7.4",
-    "redis-pdel": "^5.0.1",
+    "redis-pdel": "^6.0.0",
     "sinon": "^21.0.0",
     "sinon-chai": "^4.0.1"
   }
