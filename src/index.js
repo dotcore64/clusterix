@@ -1,10 +1,10 @@
-import { EventEmitter } from 'node:events';
-import { hostname } from 'node:os';
-import { setTimeout } from 'node:timers/promises';
-import { readFileSync } from 'fs'; // eslint-disable-line unicorn/prefer-node-protocol
+import { EventEmitter } from "node:events";
+import { hostname } from "node:os";
+import { setTimeout } from "node:timers/promises";
+import { readFileSync } from "fs"; // eslint-disable-line unicorn/prefer-node-protocol
 
 const defaultNodeId = () => `${hostname()}:${process.env.PORT}`;
-const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line unicorn/prefer-module
+const lua = readFileSync(require.resolve("./poll.lua"), "utf8"); // eslint-disable-line unicorn/prefer-module
 
 export default class extends EventEmitter {
   #id;
@@ -37,16 +37,19 @@ export default class extends EventEmitter {
     return this.#timeout;
   }
 
-  constructor(redis, {
-    id = null,
-    nodeId = defaultNodeId(),
-    heartbeatInterval = 500,
-    pollInterval = 500,
-    timeout = 1000,
-  } = {}) {
+  constructor(
+    redis,
+    {
+      id = null,
+      nodeId = defaultNodeId(),
+      heartbeatInterval = 500,
+      pollInterval = 500,
+      timeout = 1000,
+    } = {},
+  ) {
     super();
 
-    redis.defineCommand('__clusterix__poll', {
+    redis.defineCommand("__clusterix__poll", {
       numberOfKeys: 1,
       lua,
     });
@@ -60,29 +63,32 @@ export default class extends EventEmitter {
   }
 
   get nodes() {
-    return this.redis.hkeys(this.#redisKey('heartbeats'));
+    return this.redis.hkeys(this.#redisKey("heartbeats"));
   }
 
   initializeNode() {
-    if (this.heartbeatInterval > this.timeout) throw new Error('Heartbeats should be more frequent than the timeout');
+    if (this.heartbeatInterval > this.timeout)
+      throw new Error("Heartbeats should be more frequent than the timeout");
 
     const timestamp = Date.now();
-    return this.#heartbeat(timestamp)
-      .then(async (initialized) => {
-        if (!initialized) {
-          // Test if another node is sending heartbeats as this node
-          await setTimeout(this.heartbeatInterval);
-          if (await this.#lastTimestamp() > timestamp) {
-            throw new Error('Duplicate node sending heartbeats');
-          }
-
-          // This node went down without proper cleanup
-          this.#emitNodeDown();
+    return this.#heartbeat(timestamp).then(async (initialized) => {
+      if (!initialized) {
+        // Test if another node is sending heartbeats as this node
+        await setTimeout(this.heartbeatInterval);
+        if ((await this.#lastTimestamp()) > timestamp) {
+          throw new Error("Duplicate node sending heartbeats");
         }
 
-        this.heartbeatTimer = setInterval(this.#heartbeat, this.heartbeatInterval);
-        this.pollTimer = setInterval(this.#poll, this.pollInterval);
-      });
+        // This node went down without proper cleanup
+        this.#emitNodeDown();
+      }
+
+      this.heartbeatTimer = setInterval(
+        this.#heartbeat,
+        this.heartbeatInterval,
+      );
+      this.pollTimer = setInterval(this.#poll, this.pollInterval);
+    });
   }
 
   dispose() {
@@ -93,25 +99,21 @@ export default class extends EventEmitter {
     this.pollTimer = null;
   }
 
-  #redisKey = (key) => ((typeof this.id === 'string' && this.id.length > 0)
-    ? `${this.id}:${key}`
-    : key);
+  #redisKey = (key) =>
+    typeof this.id === "string" && this.id.length > 0
+      ? `${this.id}:${key}`
+      : key;
 
-  #lastTimestamp = () => (
-    this.redis.hget(this.#redisKey('heartbeats'), this.nodeId)
-  );
+  #lastTimestamp = () =>
+    this.redis.hget(this.#redisKey("heartbeats"), this.nodeId);
 
-  #heartbeat = (timestamp = Date.now()) => (
-    this.redis.hset(this.#redisKey('heartbeats'), this.nodeId, timestamp)
-  );
+  #heartbeat = (timestamp = Date.now()) =>
+    this.redis.hset(this.#redisKey("heartbeats"), this.nodeId, timestamp);
 
-  #poll = () => (
-    this.redis.__clusterix__poll(  
-      this.#redisKey('heartbeats'),
-      Date.now(),
-      this.timeout,
-    ).then((nodes) => nodes.forEach(this.#emitNodeDown))
-  );
+  #poll = () =>
+    this.redis
+      .__clusterix__poll(this.#redisKey("heartbeats"), Date.now(), this.timeout)
+      .then((nodes) => nodes.forEach(this.#emitNodeDown));
 
-  #emitNodeDown = (nodeId = this.nodeId) => this.emit('node down', nodeId);
+  #emitNodeDown = (nodeId = this.nodeId) => this.emit("node down", nodeId);
 }
