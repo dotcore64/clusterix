@@ -4,7 +4,7 @@ import { setTimeout } from 'node:timers/promises';
 import { readFileSync } from 'fs'; // eslint-disable-line unicorn/prefer-node-protocol
 
 const defaultNodeId = () => `${hostname()}:${process.env.PORT}`;
-const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line no-undef,unicorn/prefer-module
+const lua = readFileSync(require.resolve('./poll.lua'), 'utf8'); // eslint-disable-line unicorn/prefer-module
 
 export default class extends EventEmitter {
   #id;
@@ -106,7 +106,7 @@ export default class extends EventEmitter {
   );
 
   #poll = () => (
-    this.redis.__clusterix__poll( // eslint-disable-line no-underscore-dangle
+    this.redis.__clusterix__poll(  
       this.#redisKey('heartbeats'),
       Date.now(),
       this.timeout,
