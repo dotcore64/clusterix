@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "type": "module",
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^20.13.0 || >=22.0.0"
   },
   "exports": {
     ".": "./dist/index.js",
@@ -14,7 +14,7 @@
   "scripts": {
     "build": "babel src -s -d dist",
     "lint": "eslint --cache .",
-    "test": "mocha",
+    "test": "node --test --import ./test/prepare.js",
     "cover": "c8 npm test",
     "prepare": "npm run build"
   },
@@ -50,7 +50,6 @@
     "eslint-plugin-n": "^18.0.1",
     "eslint-plugin-unicorn": "^64.0.0",
     "ioredis": "^5.10.1",
-    "mocha": "^11.7.5",
     "redis-pdel": "^6.0.0",
     "sinon": "^22.0.0",
     "sinon-chai": "^4.0.1"

@@ -1,3 +1,4 @@
+import { describe, it, beforeEach, after, afterEach } from 'node:test';
 import { setTimeout } from 'node:timers/promises';
 
 import Redis from 'ioredis';
