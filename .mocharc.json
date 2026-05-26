@@ -1,5 +1,0 @@
-{
-  "ui": "bdd",
-  "report": "spec",
-  "require": ["test/prepare.js"]
-}
