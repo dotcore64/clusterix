@@ -39,7 +39,7 @@
     "@babel/cli": "^8.0.4",
     "@babel/core": "^8.0.1",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.7.2",
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^10.0.1",
     "babel-plugin-static-fs": "^3.0.0",
     "c8": "^11.0.0",
     "chai": "^6.2.2",
