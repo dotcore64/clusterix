@@ -52,7 +52,7 @@
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-unicorn": "^64.0.0",
     "eslint-plugin-yml": "^3.8.1",
-    "ioredis": "^5.11.1",
+    "ioredis": "^6.0.0",
     "prettier": "3.9.6",
     "redis-pdel": "^7.0.0",
     "sinon": "^22.1.0",
